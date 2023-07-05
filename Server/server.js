@@ -1,8 +1,8 @@
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import path from 'path';
-import { authMiddleware } from './utils/auth';
-import { typeDefs, resolvers } from './schemas';
+import { authMiddleware } from './utils/auth.js';
+import { typeDefs, resolvers } from './schemas/index.js';
 import { createConnection } from 'typeorm';
 
 const PORT = process.env.PORT || 3001;

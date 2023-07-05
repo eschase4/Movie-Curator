@@ -8,7 +8,7 @@
   "main": "server/server.js",
   "scripts": {
     "start": "craco start && postcss src/css/app.css -o Xpublic/app.css",
-    "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm dev\"",
+    "develop": "concurrently \"cd server && npm run dev\" \"cd client && npm start\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "seed": "cd server && npm run seed",
     "build": "craco build"
