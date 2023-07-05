@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 
-const omdbKey = import.meta.env.VITE_OMDB_KEY;
+const omdbKey = process.env.OMDB_KEY;
 console.log(omdbKey);
 const url = `http://www.omdbapi.com/?i=tt3896198&apikey=${omdbKey}&s=`;
 

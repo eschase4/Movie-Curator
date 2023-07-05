@@ -1,4 +1,3 @@
-const Profile = require('./Profile');
+import Profile from './Profile.js';
 
-
-module.exports = { Profile };
+export { Profile };

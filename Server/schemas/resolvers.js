@@ -1,7 +1,7 @@
 import { AuthenticationError, UserInputError } from 'apollo-server-express';
-import { Profile } from '../models';
-import { signToken } from '../utils/auth';
-import { buildResolveInfo } from 'graphql/execution/execute';
+import { Profile } from '../models/index.js';
+import { signToken } from '../utils/auth.js';
+// import { buildResolveInfo } from 'graphql/execution/execute';
 
 const resolvers = {
   Query: {
@@ -64,17 +64,6 @@ const resolvers = {
       return Profile.findOneAndUpdate(
         { _id: profileId },
         { $addToSet: { swipedProfiles: swipedProfileId } },
-        {
-          new: true,
-          runValidators: true,
-        }
-      )
-    },
-
-    match: async (parent, { profileId, matchedProfileId }, context) => {
-      return Profile.findOneAndUpdate(
-        { _id: profileId },
-        { $addToSet: { matches: matchedProfileId } },
         {
           new: true,
           runValidators: true,

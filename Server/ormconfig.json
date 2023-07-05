@@ -1,0 +1,9 @@
+{
+    "type": "mongodb",
+    "host": "localhost",
+    "port": 27017,
+    "database": "movie-curator",
+    "entities": ["dist/entities/*.js"],
+    "synchronize": true
+  }
+  
