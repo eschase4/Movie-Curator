@@ -13,8 +13,6 @@
         "curator",
         "application"
     ],
-    "author": "Your Name",
-    "license": "MIT",
     "dependencies": {
         "apollo-graphql": "^0.9.7",
         "apollo-server-express": "^3.12.0",
