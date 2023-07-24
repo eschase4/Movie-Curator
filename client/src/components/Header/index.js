@@ -1,16 +1,14 @@
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import React from 'react';
+import path from 'path'
 
-const omdbKey = process.env.OMDB_KEY;
-console.log(omdbKey);
+require('dotenv').config({ path: path.resolve(__dirname, './../../.env') })
+
+const omdbKey = process.env.REACT_APP_OMDB_KEY;
 const url = `http://www.omdbapi.com/?i=tt3896198&apikey=${omdbKey}&s=`;
+console.log(omdbKey, url);
 
 const Header = () => {
-  const handleSearch = (event) => {
-    event.preventDefault();
-    console.log('search');
-  };
-
 
   return (
     <header className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -36,17 +34,6 @@ const Header = () => {
               </Link>
             </li>
           </ul>
-          <form className="form-inline ml-3">
-            <input
-              className="form-control mr-sm-2"
-              type="search"
-              placeholder="Search Movies"
-              aria-label="Search"
-            />
-            <button className="btn btn-outline-light my-2 my-sm-0" type="submit" onClick={handleSearch}>
-              Search
-            </button>
-          </form>
         </div>
       </nav>
     </header>

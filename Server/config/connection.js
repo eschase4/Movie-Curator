@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://0.0.0.0:27017/movie-curator');
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/movie-curator');
 
-module.exports = mongoose.connection;
+export default mongoose.connection;

@@ -6,13 +6,8 @@ const typeDefs = gql`
     name: String
     email: String
     password: String
-    instrument: [String]
-    age: Int
-    url: String
-    likedProfiles: [ID]
-    bio: String
-    matches: [ID]
-    swipedProfiles: [String]
+    likedMovies: [String]
+    dislikedMovies: [String]
   }
 
   type Auth {

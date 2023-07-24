@@ -22,34 +22,13 @@ const profileSchema = new Schema({
     minlength: 5,
   },
 
-  instrument:[{
+  likedMovies:[{
       type: String,
   }],
 
-  age: {
-    type: Number,
-  },
-
-  url: {
-    type: String,
-    trim: true,
-  },
-
-  likedProfiles: [{
-    type: String,
+  dislikedMovies:[{
+      type: String,
   }],
-
-  bio: {
-    type: String,
-  },
-
-  matches: [{
-    type: String,
-  }],
-
-  swipedProfiles: [{
-    type: String,
-  }]
 
 });
 
