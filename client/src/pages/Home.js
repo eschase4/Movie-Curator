@@ -6,7 +6,8 @@ const url = `http://www.omdbapi.com/?i=tt3896198&apikey=${omdbKey}&s=`;
 
 const HomePage = () => {
   const [formState, setFormState] = useState({ search: '' });
-  const [movies, setMovies] = useState({movies: []});
+  const [movies, setMovies] = useState([]);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -43,15 +44,31 @@ const HomePage = () => {
           Search
         </button>
       </form>
-      {movies && movies.length > 0 ? (
-        movies.map((movie) => (
-          <h1 key={movie.imdbID}>{movie.Title}</h1>
-        ))
-      ) : (
-        <div className='mt-5'>
-          <h1>No Movies Found</h1>
-        </div>
-      )}
+      <div className="row mt-5">
+        {movies && movies.length > 0 ? (
+          movies.map((movie) => (
+            <div className="col-lg-3 col-md-4 col-sm-6 mb-4" key={movie.imdbID}>
+              <div className="card">
+                <img
+                  className="card-img-top"
+                  src={movie.Poster}
+                  alt={movie.Title}
+                />
+                <div className="card-body">
+                  <h5 className="card-title">{movie.Title}</h5>
+                  <Link to={`/movie/${movie.imdbID}`} className="btn btn-primary">
+                    Details
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="col">
+            <h1>No Movies Found</h1>
+          </div>
+        )}
+      </div>
     </>
   );
 };
