@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import auth from '../../utils/auth.js';
 import path from 'path'
 
 require('dotenv').config({ path: path.resolve(__dirname, './../../.env') })
@@ -29,9 +30,15 @@ const Header = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/logout" className="nav-link">
-                Log Out
-              </Link>
+              {auth.loggedIn() ? (
+                <Link to="/logout" className="nav-link">
+                  Log Out
+                </Link>
+              ) : (
+                <Link to="/login" className="nav-link">
+                  Log In/Sign Up
+                </Link>
+              )}
             </li>
           </ul>
         </div>

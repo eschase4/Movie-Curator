@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
 
-const secret = 'mysecretssshhhhhhh';
-const expiration = '2h';
-
+const secret = process.env.REACT_APP_SECRET;
+const expiration = process.env.REACT_APP_EXPIRATION;
+console.log(secret, expiration)
 
  export function authMiddleware({ req })  {
     // allows token to be sent via req.body, req.query, or headers
@@ -25,7 +25,7 @@ const expiration = '2h';
       console.log('Invalid token');
     }
 
-    // return the request object so it can be passed to the resolver as `context`
+    // return the request object so it can be passed to the resolver as `context`npm
     return req;
   }
 export function signToken({ email, name, _id }) {

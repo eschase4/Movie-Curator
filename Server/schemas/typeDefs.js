@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-express';
 const typeDefs = gql`
   type Profile {
     _id: ID
-    name: String
+    username: String
     email: String
     password: String
     likedMovies: [String]
@@ -45,7 +45,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    addProfile(name: String!, email: String!, password: String!): Auth
+    addProfile(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     addAbout(profileId: ID!, instrument: String!, age: Int!, url: String!, bio: String!): Profile
     likeProfile(profileId: ID!, likedProfileId: ID!): Profile
