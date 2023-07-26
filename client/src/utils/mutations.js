@@ -23,3 +23,13 @@ export const LOGIN_USER = gql`
     }
   }
 `;
+
+export const LIKE_MOVIE = gql`
+  mutation likeMovie($imdbID: String!, $title: String!, $poster: String!) {
+    likeMovie(imdbID: $imdbID, title: $title, poster: $poster) {
+      _id
+      title
+      poster
+    }
+  }
+`;

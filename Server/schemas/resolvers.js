@@ -17,7 +17,8 @@ const resolvers = {
       if (context.user) {
         return Profile.findOne({ _id: context.user._id });
       }
-      throw new AuthenticationError('You need to be logged in!');
+      // throw new AuthenticationError('You need to be logged in!');
+      
     },
 
   },
@@ -47,49 +48,13 @@ const resolvers = {
       return { token, profile };
     },
 
-    likeProfile: async (parent, { profileId, likedProfileId }, context) => {
-      return Profile.findOneAndUpdate(
-        { _id: profileId },
-        {
-          $addToSet: { likedProfiles: likedProfileId }
-        },
-        {
-          new: true,
-          runValidators: true,
-        }
-      )
-    },
-
-    addSwipe: async (parent, { profileId, swipedProfileId }, context) => {
-      return Profile.findOneAndUpdate(
-        { _id: profileId },
-        { $addToSet: { swipedProfiles: swipedProfileId } },
-        {
-          new: true,
-          runValidators: true,
-        }
-      )
+    likeMovie: async (parent, { imdbID, title, poster }) => {
+      const movie = await Movie.create({ imdbID, title, poster });
+      return movie;
     },
 
 
-    addAbout: async (parent, { profileId, instrument, age, url, bio }, context) => {
-      // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
-      // if (context.user) {
-      return Profile.findOneAndUpdate(
-        { _id: profileId },
-        {
-          $addToSet: { instrument: instrument },
-          $set: { age: age, url: url, bio: bio },
-        },
-        {
-          new: true,
-          runValidators: true,
-        }
-      );
-      // }
-      // If user attempts to execute this mutation and isn't logged in, throw an error
-      // throw new AuthenticationError('You need to be logged in!');
-    },
+
 
     // Set up mutation so a logged in user can only remove their profile and no one else's
     removeProfile: async (parent, args, context) => {

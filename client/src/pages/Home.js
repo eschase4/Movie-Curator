@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { LIKE_MOVIE } from "../../utils/mutations";
 const omdbKey = process.env.REACT_APP_OMDB_KEY;
 const url = `http://www.omdbapi.com/?i=tt3896198&apikey=${omdbKey}&s=`;
 
 const HomePage = () => {
-  const [formState, setFormState] = useState({ search: '' });
+  const [formState, setFormState] = useState({ search: "" });
   const [movies, setMovies] = useState([]);
+
+  const [likeMovie, { error, data }] = useMutation(LIKE_MOVIE);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -22,12 +25,20 @@ const HomePage = () => {
     try {
       const response = await fetch(`${url}/${formState.search}`);
       const data = await response.json();
-      console.log(data);
       setMovies(data.Search);
     } catch (error) {
       console.error("Error fetching movies:", error);
     }
   };
+
+  const handleLike = async (event) => {
+    event.preventDefault1()
+    try {
+      const response = await likeMovie({
+        variables: { ...formState },
+        
+      })
+  }
 
   return (
     <>
@@ -56,9 +67,22 @@ const HomePage = () => {
                 />
                 <div className="card-body">
                   <h5 className="card-title">{movie.Title}</h5>
-                  <Link to={`/movie/${movie.imdbID}`} className="btn btn-primary">
-                    Details
-                  </Link>
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    // onClick={}
+                  >
+                    Dislike
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={(event) => {
+                      console.log(event.target.parentNode.children)
+                    }}
+                  >
+                    Like
+                  </button>
                 </div>
               </div>
             </div>
