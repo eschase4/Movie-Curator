@@ -1,12 +1,9 @@
 import { Schema, model, mongo } from 'mongoose';
 import bcrypt from 'bcrypt';
-import mongoose from 'mongoose';
+
+import Movie from './Movie.js';
 
 const profileSchema = new Schema({
-  _id: { 
-    type: String,
-    required: true,
-  },
   username: {
     type: String,
     required: true,
@@ -27,19 +24,17 @@ const profileSchema = new Schema({
     minlength: 5,
   },
 
-  likedMovies:[{
-      title: String,
-      poster: String, 
-      genre: String,
-      rating: Number,
-      imdbID: String,
-  }],
+  likedMovies: [Movie.schema],
 
-  dislikedMovies:[{
-      type: String,
-  }],
+  dislikedMovies: [Movie.schema],
 
-});
+},
+  {
+    toJSON: {
+      virtuals: true,
+    },
+  }
+);
 
 // set up pre-save middleware to create password
 profileSchema.pre('save', async function (next) {

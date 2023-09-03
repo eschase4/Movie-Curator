@@ -27,11 +27,13 @@ export const LOGIN_USER = gql`
 export const LIKE_MOVIE = gql`
   mutation likeMovie($imdbID: String!, $title: String!, $poster: String!, $genre: String!, $rating: Float!) {
     likeMovie(imdbID: $imdbID, title: $title, poster: $poster, genre: $genre, rating: $rating) {
-      imdbID
-      title
-      poster
-      genre
-      rating
+      likedMovies {
+        imdbID
+        title
+        poster
+        genre
+        rating
+      }
     }
   }
 `;

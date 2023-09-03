@@ -11,6 +11,7 @@ const typeDefs = gql`
   }
 
   type Movie {
+    _id: ID 
     imdbID: String
     title: String
     poster: String
@@ -35,7 +36,7 @@ const typeDefs = gql`
   type Mutation {
     addProfile(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    likeMovie(imdbID: String!, title: String!, poster: String!, rating: Float!, genre: String!): Movie
+    likeMovie(imdbID: String!, title: String!, poster: String!, rating: Float!, genre: String!): Profile
 
 
     removeProfile: Profile

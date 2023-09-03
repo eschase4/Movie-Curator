@@ -1,5 +1,5 @@
 import { AuthenticationError, UserInputError } from 'apollo-server-express';
-import { Profile } from '../models/index.js';
+import { Profile, Movie } from '../models/index.js';
 import { signToken } from '../utils/auth.js';
 // import { buildResolveInfo } from 'graphql/execution/execute';
 
@@ -9,7 +9,7 @@ const resolvers = {
       return Profile.find();
     },
 
-    profile: async (parent, { _id}) => {
+    profile: async (parent, { _id }) => {
       return Profile.findOne({ _id });
     },
     // By adding context to our query, we can retrieve the logged in user without specifically searching for them
@@ -18,7 +18,7 @@ const resolvers = {
         return Profile.findOne({ _id: context.user._id });
       }
       throw new AuthenticationError('You need to be logged in!');
-      
+
     },
 
   },
@@ -49,19 +49,19 @@ const resolvers = {
     },
 
     likeMovie: async (parent, { imdbID, title, poster, genre, rating }, context) => {
-      if (context.user) {
-        return Profile.findOneAndUpdate(
-          { _id: context.user._id },
-          {
-            $addToSet: { likedMovies: { imdbID, title, poster, genre, rating} },
-          },
-          {
-            new: true,
-            runValidators: true,
-          }
-        );
+      if (!context.user) {
+        throw new AuthenticationError('You need to be logged in to save a book!');
       }
-      throw new AuthenticationError('You need to be logged in!');
+      
+      const newMovie = await Movie.create({ imdbID, title, poster, genre, rating });
+      console.log(newMovie)
+
+      const updatedProfile = await Profile.findOneAndUpdate(
+        { _id: context.user._id },
+        { $addToSet: { likedMovies: newMovie } },
+        { new: true }
+      );
+      return updatedProfile;
     },
 
 
