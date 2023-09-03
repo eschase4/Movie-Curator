@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import auth from '../../utils/auth.js';
-import path from 'path'
 
-require('dotenv').config({ path: path.resolve(__dirname, './../../.env') })
+require('dotenv').config()
 
 const omdbKey = process.env.REACT_APP_OMDB_KEY;
 const url = `http://www.omdbapi.com/?i=tt3896198&apikey=${omdbKey}&s=`;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-import { LIKE_MOVIE } from "../../utils/mutations";
+import { LIKE_MOVIE } from "../utils/mutations";
 const omdbKey = process.env.REACT_APP_OMDB_KEY;
 const url = `http://www.omdbapi.com/?i=tt3896198&apikey=${omdbKey}&s=`;
 
@@ -38,6 +38,9 @@ const HomePage = () => {
         variables: { ...formState },
         
       })
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   return (
