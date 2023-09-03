@@ -9,15 +9,15 @@ const resolvers = {
       return Profile.find();
     },
 
-    profile: async (parent, { profileId }) => {
-      return Profile.findOne({ _id: profileId });
+    profile: async (parent, { _id}) => {
+      return Profile.findOne({ _id });
     },
     // By adding context to our query, we can retrieve the logged in user without specifically searching for them
     me: async (parent, args, context) => {
       if (context.user) {
         return Profile.findOne({ _id: context.user._id });
       }
-      // throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError('You need to be logged in!');
       
     },
 
@@ -48,11 +48,21 @@ const resolvers = {
       return { token, profile };
     },
 
-    likeMovie: async (parent, { imdbID, title, poster }) => {
-      const movie = await Movie.create({ imdbID, title, poster });
-      return movie;
+    likeMovie: async (parent, { imdbID, title, poster, genre, rating }, context) => {
+      if (context.user) {
+        return Profile.findOneAndUpdate(
+          { _id: context.user._id },
+          {
+            $addToSet: { likedMovies: { imdbID, title, poster, genre, rating} },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+      }
+      throw new AuthenticationError('You need to be logged in!');
     },
-
 
 
 

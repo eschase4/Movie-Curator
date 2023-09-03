@@ -1,7 +1,12 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, mongo } from 'mongoose';
 import bcrypt from 'bcrypt';
+import mongoose from 'mongoose';
 
 const profileSchema = new Schema({
+  _id: { 
+    type: String,
+    required: true,
+  },
   username: {
     type: String,
     required: true,
@@ -23,7 +28,11 @@ const profileSchema = new Schema({
   },
 
   likedMovies:[{
-      type: String,
+      title: String,
+      poster: String, 
+      genre: String,
+      rating: Number,
+      imdbID: String,
   }],
 
   dislikedMovies:[{

@@ -6,14 +6,16 @@ const typeDefs = gql`
     username: String
     email: String
     password: String
-    likedMovies: [String]
-    dislikedMovies: [String]
+    likedMovies: [Movie]
+    dislikedMovies: [Movie]
   }
 
   type Movie {
-    _id: ID
+    imdbID: String
     title: String
     poster: String
+    rating: Float
+    genre: String
   }
 
   type Auth {
@@ -24,7 +26,7 @@ const typeDefs = gql`
 
   type Query {
     profiles: [Profile]!
-    profile(profileId: ID!): Profile
+    profile(_id: ID!): Profile
     # Because we have the context functionality in place to check a JWT and decode its data, we can use a query that will always find and return the logged in user's data
     me: Profile
     movies: [Movie]
@@ -33,9 +35,8 @@ const typeDefs = gql`
   type Mutation {
     addProfile(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    likeMovie(imdbID: String!, title: String!, poster: String!): Movie
-    match(profileId: ID!, matchedProfileId: ID!): Profile
-    addSwipe(profileId: ID!, swipedProfileId: ID!): Profile
+    likeMovie(imdbID: String!, title: String!, poster: String!, rating: Float!, genre: String!): Movie
+
 
     removeProfile: Profile
   }

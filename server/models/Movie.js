@@ -13,6 +13,12 @@ const movieSchema = new Schema({
   poster: {
     type: String,
   },
+  rating: {
+    type: Number,
+  },
+  genre: {
+    type: String,
+  },
 });
 
 const Movie = model("Movie", movieSchema);

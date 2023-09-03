@@ -23,25 +23,35 @@ const HomePage = () => {
   const handleSearch = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch(`${url}/${formState.search}`);
+      console.log(formState.search);
+      const response = await fetch(`https://www.omdbapi.com/?apikey=${omdbKey}&s=${formState.search}`);
       const data = await response.json();
+      // console.log(data);
       setMovies(data.Search);
     } catch (error) {
       console.error("Error fetching movies:", error);
     }
   };
 
-  const handleLike = async (event) => {
-    event.preventDefault1()
+  const handleLike = async (movie) => {
+    console.log(movie);
     try {
-      const response = await likeMovie({
-        variables: { ...formState },
-        
-      })
-    } catch (e) {
-      console.log(e)
+      const { Title: title } = movie;
+      // console.log(movie)
+      const response = await fetch(`https://www.omdbapi.com/?apikey=${omdbKey}&t=${title}`);
+      const data = await response.json();
+      // console.log(data);
+      let { imdbID, imdbRating: rating, Poster: poster, Genre: genre } = data;
+      rating = parseFloat(rating);
+      await likeMovie({
+        variables: { imdbID, title, poster, genre, rating },
+      });
+
+    } catch (error) {
+      console.error("Error liking movie:", error);
     }
   }
+
 
   return (
     <>
@@ -60,7 +70,7 @@ const HomePage = () => {
       </form>
       <div className="row mt-5">
         {movies && movies.length > 0 ? (
-          movies.map((movie) => (
+          movies.map((movie, key) => (
             <div className="col-lg-3 col-md-4 col-sm-6 mb-4" key={movie.imdbID}>
               <div className="card">
                 <img
@@ -80,9 +90,7 @@ const HomePage = () => {
                   <button
                     type="button"
                     className="btn btn-success"
-                    onClick={(event) => {
-                      console.log(event.target.parentNode.children)
-                    }}
+                    onClick={(event) => {handleLike(movies[key])}}
                   >
                     Like
                   </button>
